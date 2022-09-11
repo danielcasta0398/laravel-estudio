@@ -24,6 +24,21 @@ Route::get('/fecha', function () {
     ));
 });
 
-Route::get('/peliculas/{titulo}', function () {
+Route::get('/pelicula/{titulo?}/{year}', function ($titulo = 'No hay pelicula seleccionada', $year) {
+    return view('pelicula', array(
+        'titulo' => $titulo,
+        'year' => $year
+    ));
+})->where(array(
+    'titulo' => '[a-zA-Z]+',
+    'year' => '[0-9]+'
+));
 
+Route::get('/listado-peliculas', function(){
+    $titulo = "Listado de peliculas";
+    $listado = array('Batman', 'Spiderman', 'Gran Torino');
+
+    return view('peliculas.listado')
+                ->with('titulo', $titulo)
+                ->with('listado', $listado);
 });
